@@ -50,12 +50,13 @@ class MainWindow(QTabWidget):
         super(MainWindow, self).__init__(parent)
 
         self.conf_input_tab = QWidget()
+        self.render_tab = QWidget()
 
 
         self.addTab(self.conf_input_tab, 'Configure Input')
-#        self.addTab(self.render_tab, 'Render')
+        self.addTab(self.render_tab, 'Render')
         self.conf_input_tab_UI()
-#        self.render_tab_UI()
+        self.render_tab_UI()
 #        self.render_tab.setDisabled(True)
         self.read_succ = True
 
@@ -252,7 +253,16 @@ class MainWindow(QTabWidget):
         
         self.main_layout.addLayout(self.grid)
         self.conf_input_tab.setLayout(self.main_layout) 
+
+    def render_tab_UI(self):
+        '''
+        The Render tab
+        '''
+        self.render_layout = QVBoxLayout()
+        self.render_grid = QGridLayout()
         
+        self.render_layout.addLayout(self.render_grid)
+        self.render_tab.setLayout(self.render_layout)        
     def check(self, state):
         if self.CheckBox.isChecked() == True:
             print "it works!!"
