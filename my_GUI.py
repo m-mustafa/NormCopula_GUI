@@ -127,7 +127,7 @@ class MainWindow(QTabWidget):
 
         self.date_fmt_lab = QLabel('Date Format:')
         self.date_fmt_box = QComboBox()
-        self.date_fmt_box.addItems(['','%Y-%m-%d','%d-%m-%Y','%m-%d-%Y'])
+        self.date_fmt_box.addItems(['','yyyy-mm-dd','dd-mm-yyyy','mm-dd-yyyy'])
 #        self.in_sheet_box.currentIndexChanged.connect(self.select_sheet)
         self.grid.addWidget(self.date_fmt_lab, i, 0)
         self.grid.addWidget(self.date_fmt_box, i, 1, 1, 20)
@@ -327,7 +327,7 @@ class MainWindow(QTabWidget):
 ##        self.infill_stns_line.clear()
 #        self.censor_period_list = self.censor_period.split()
 #        print "censor period Added Successfully.... Current period:", self.censor_period_list
-        
+
 
     def read_data(self):
         try:
@@ -355,9 +355,18 @@ class MainWindow(QTabWidget):
             self.show_error('Please Select a valid Output Directory', QMessageBox.Critical, details=repr(msg))
             print u'\u2716', "Error reading Output directory"
         try:
-            self.date_fmt = self.date_fmt_box.currentText()
+            if self.date_fmt_box.currentText() == 'yyyy-mm-dd':
+                self.date_fmt = '%Y-%m-%d'
+                print self.date_fmt_box.currentText()
+            elif self.date_fmt_box.currentText() == 'dd-mm-yyyy':
+                self.date_fmt = '%d-%m-%Y'
+                print self.date_fmt
+            elif self.date_fmt_box.currentText() == 'mm-dd-yyyy':
+                self.date_fmt = '%m-%d-%Y'
+            else:
+                print u'\u2716', "Error Interpreting Date format"
             assert self.date_fmt
-            print u'\u2714', "Date Format is:", self.date_fmt
+            print u'\u2714', "Date Format is:", self.date_fmt_box.currentText()
         except Exception as msg:
             self.show_error('Please Select a valid Date format', QMessageBox.Critical, details=repr(msg))
             print u'\u2716', "Error reading Date format"
